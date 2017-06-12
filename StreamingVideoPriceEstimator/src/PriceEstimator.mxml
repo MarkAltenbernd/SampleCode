@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:peVuComps="altenbernd.billing.priceEstimator.view.components.desktop.*"
+	layout="vertical" borderStyle="solid" verticalAlign="top" 
+    horizontalAlign="center" applicationComplete="initApp();">
+	<mx:Script>
+		<![CDATA[
+        	import mx.core.Application;
+        	import flash.events.FocusEvent;
+        	import mx.managers.FocusManager;
+            import mx.events.ItemClickEvent;
+            import mx.controls.Alert;
+        	
+			import altenbernd.billing.priceEstimator.PriceEstimatorFacade;
+			import altenbernd.billing.priceEstimator.model.PriceEstimatorState;
+			import altenbernd.billing.priceEstimator.model.vo.VolumeVO;
+			import altenbernd.billing.priceEstimator.view.components.*;
+			
+			public static var facade:PriceEstimatorFacade;
+			
+            private static const ENTER:uint = 13;
+			
+			private function initApp():void {
+				facade  = PriceEstimatorFacade.getInstance();
+				facade.startup(this);
+				peCanvas.inputsCanvas.addEventListener(KeyboardEvent.KEY_DOWN, trapKeys);
+                
+                peCanvas.inputsCanvas.visitsPerMonth.setFocus();
+			}
+            private function trapKeys(evnt:KeyboardEvent):void {
+            	if (evnt.charCode == ENTER) {
+            		Application.application.focusManager.getNextFocusManagerComponent(evnt.shiftKey).setFocus();
+            	}
+			}
+		]]>
+	</mx:Script>
+	<peVuComps:PriceEstimatorCanvas id="peCanvas" />
+</mx:WindowedApplication>

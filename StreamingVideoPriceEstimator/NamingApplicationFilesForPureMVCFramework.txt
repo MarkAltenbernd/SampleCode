@@ -1,0 +1,7 @@
+NOTE ON NAMING FILES FOR FLASH BUILDER
+
+The pureMVC framework requires that the application file be named "PriceEstimator", 
+irrespective of the project name.
+
+Thus FPPriceEstimatorPureMVC and FPPriceEstimator_Mobile both must have their app file
+named "PriceEstiamtor".

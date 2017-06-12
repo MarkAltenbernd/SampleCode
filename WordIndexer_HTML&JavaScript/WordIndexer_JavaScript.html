@@ -1,0 +1,59 @@
+tabAboutWordIndexer-HTML					 -->
+<!-- ############################################################################### --> 
+		<div id="tabAboutWordIndexer-HTML">
+			<section id="sectionWordIndexer-HTML">			<h3 class="hide">Altenbernd Word Indexer - HTML</h3>
+				<article id="articleWordIndexer-HTML">
+					<h2 class="center">Word Indexer</h2>
+					<h3 class="center">Implemented in HTML</h3>
+					<div class="divIndexerRequirements-HTML">
+						<h2 class="hide">Requirements - HTML</h2>
+						<ul>
+							<li>A &ldquo;word&rdquo; is any sequence of capital letters A-Z and is not limited to just "dictionary words"</li>
+							<li>For any word with at least two different letters, there are other words composed of the same letters but in a different order</li>
+							<li>We can assign a number to every word, an index of where it falls in an alphabetically sorted list of all words made up of the same set of letters</li>
+							<li>Write a program that takes a word as input and computes its index in the related sorted list</li>
+							<li>A word may be up to 25 letters in length, with repeated letters permitted</li>
+							<li>The program should use no more than 1 GB of memory and take no more than 500 milliseconds to run</li>
+						</ul>
+						<br /><br />
+							<!--div id="downloadDiv-Flex">
+								<a href="resources/AltenberndWordIndexer.zip">
+									<h3 class="bg-info text-center">Download the zipped-up application</h3>
+								</a>
+							</div-->
+					</div>	
+					<div class="divIndexerApplication-HTML container" ng-controller="WordIndexerCtrl as ctrl">
+						<div class="row" id="indexerInstructions">
+							<div class="col-xs-5 col text-center h5">
+							Enter a "word", up to 25 letters in length:</div>
+						</div>
+						<div class="row" id="theWord">
+							<div class="col-xs-2 col text-left h6">The Word:</div>
+							<div class="col-xs-3 col text-right">
+								<input type="text" maxlength="25" size="34" class="text-left" placeholder="Enter your word here" id="wordBox" autofocus ng-model="ctrl.wordBoxText" ng-change="ctrl.updateUI()">
+							</div>
+						</div>
+						<div class="row" id="numLetters">
+							<div class="col-xs-3 col text-left h6">Number of Letters:</div>
+							<div class="col-xs-3 col text-right">{{ctrl.numberLetters | number:0}}</div>
+						</div>
+						<div class="row" id="uniqueLetters">
+							<div class="col-xs-3 col text-left h6">Unique Letters:</div>
+							<div class="col-xs-3 col text-right">{{ctrl.uniqueLetters|  number:0}}</div>
+						</div>
+						<div class="row" id="totalWords">
+							<div class="col-xs-3 col text-left h6">Total Words:</div>
+							<div class="col-xs-3 col text-right">{{ctrl.totalWords | number:0}}</div>
+						</div>
+						<div class="row" id="uniqueWords">
+							<div class="col-xs-3 col text-left h6">Unique Words:</div>
+							<div class="col-xs-3 col text-right">{{ctrl.uniqueWords | number:0}}</div>
+						</div>
+						<div class="row" id="sortPosition">
+							<div class="col-xs-3 col text-left h6">Alpha-Sort Position:</div>
+							<div class="col-xs-3 col text-right">{{ctrl.sortPosition | number:0}}</div>
+						</div>
+					</div>	
+				</article>
+			</section>
+		</div>	<!-- id="tabAboutWordIndexer-HTML" -->

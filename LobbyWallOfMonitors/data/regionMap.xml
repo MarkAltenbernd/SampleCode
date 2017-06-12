@@ -1,0 +1,67 @@
+<salesRegions>
+	<salesRegion>
+		<region>US</region>
+		<targetSeries>0</targetSeries>
+		<reportingRegion>0</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>UK</region>
+		<targetSeries>0</targetSeries>
+		<reportingRegion>1</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Out of Country</region>
+		<targetSeries>0</targetSeries>
+		<reportingRegion>2</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Mexico</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>0</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Central America</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>1</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>South America</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>1</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Middle East</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>2</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Canada</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>3</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Europe</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>4</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Eastern Europe</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>5</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Asia</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>5</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Australia</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>5</reportingRegion>
+	</salesRegion>
+	<salesRegion>
+		<region>Africa</region>
+		<targetSeries>1</targetSeries>
+		<reportingRegion>6</reportingRegion>
+	</salesRegion>
+</salesRegions>

@@ -1,0 +1,62 @@
+<report day="20090331">
+ <row>
+  <region>US</region>
+  <cars>5336</cars>
+  <dollars>9319080.61</dollars>
+ </row>
+ <row>
+  <region>UK</region>
+  <cars>1139</cars>
+  <dollars>808240.01</dollars>
+ </row>
+ <row>
+  <region>Out of Country</region>
+  <cars>1466</cars>
+  <dollars>3083517.00</dollars>
+ </row>
+ <row>
+  <region>Canada</region>
+  <cars>93</cars>
+  <dollars>463390.00</dollars>
+ </row>
+ <row>
+  <region>Mexico</region>
+  <cars>542</cars>
+  <dollars>675327.00</dollars>
+ </row>
+ <row>
+  <region>South America</region>
+  <cars>45</cars>
+  <dollars>158625.00</dollars>
+ </row>
+ <row>
+  <region>Central America</region>
+  <cars>332</cars>
+  <dollars>703425.00</dollars>
+ </row>
+ <row>
+  <region>Asia</region>
+  <cars>9</cars>
+  <dollars>35825.00</dollars>
+ </row>
+ <row>
+  <region>Middle East</region>
+  <cars>137</cars>
+  <dollars>525750.00</dollars>
+ </row>
+ <row>
+  <region>Eastern Europe</region>
+  <cars>70</cars>
+  <dollars>162985.00</dollars>
+ </row>
+ <row>
+  <region>Europe</region>
+  <cars>155</cars>
+  <dollars>177785.00</dollars>
+ </row>
+ <row>
+  <region>Africa</region>
+  <cars>80</cars>
+  <dollars>174030.00</dollars>
+ </row>
+</report>

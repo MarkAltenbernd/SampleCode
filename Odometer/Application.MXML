@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" 
+	xmlns:odom="copart.WallOfMonitors.view.odometer.*" 
+	xmlns:copart="copart.WallOfMonitors.view.hitsGauge.*"  
+	xmlns:ilog="http://www.ilog.com/2007/ilog/flex" 
+	width="640" height="540"
+	applicationComplete="initApp()">
+
+			private var odometer:Odometer = new Odometer();
+			
+			private var _lowMax:Number = 8e8;
+			private var _mediumMax:Number = 1.2e9;
+			private var _highMax:Number = 2.4e9;
+			private var _veryLowMax:Number = 8e8;
+			private var _veryHighMax:Number = 2.4e9;
+			private var _gaugeMax:Number = 1.2e9;
+			private var _overflow:Boolean = false;
+			private var _value:Number = 0;
+			private var _easingFunction:Function = Sine.easeInOut;
+			private var _animationDuration:Number = 4500;
+			private var _postingDelay:uint = 5;		
+			private var _fadeInterval:uint = 50;	//	Milliseconds
+			private var _numberOfFades:uint = 60;	//	Thus default is a 3-second fade
+			private var _duration:Number = 300;		//	For the Odometer
+
+    <mx:Canvas width="640" height="540" x="0" y="0">
+	
+        <mx:Image width="640" height="540" x="0" y="0" 
+            source="@Embed('images/Semi-Circular Gauge/HitsPerMonthBackground.jpg')" />
+        
+        <copart:HitsPerGradientTrack 
+            minimum="0" 
+            maximum="{gaugeMax}" 
+            id="speedometer" />
+        
+        
+        <mx:Image width="640" height="540" x="0" y="0" id="hitsLow" alpha="0" 
+            source="@Embed('images/Semi-Circular Gauge/HitsOverlay_800.png')" />
+        <mx:Image width="640" height="540" x="0" y="0" id="hitsMedium" alpha="1" 
+            source="@Embed('images/Semi-Circular Gauge/HitsOverlay_1200.png')" />
+        <mx:Image width="640" height="540" x="0" y="0" id="hitsHigh" alpha="0" 
+            source="@Embed('images/Semi-Circular Gauge/HitsOverlay_2400.png')" /> 
+            
+        <odom:OdometerDigit x="81" y="410" id="hourDigit_09" />
+        <odom:OdometerDigit x="125" y="410" id="hourDigit_08" />
+        <odom:OdometerDigit x="171" y="410" id="hourDigit_07" />
+        <odom:OdometerDigit x="255" y="410" id="hourDigit_06" />
+        <odom:OdometerDigit x="302" y="410" id="hourDigit_05" />
+        <odom:OdometerDigit x="348" y="410" id="hourDigit_04" />
+        <odom:OdometerDigit x="431" y="410" id="hourDigit_03" />
+        <odom:OdometerDigit x="478" y="410" id="hourDigit_02" />
+        <odom:OdometerDigit x="525" y="410" id="hourDigit_01" />
+	</mx:Canvas>
+</mx:Application>

@@ -1,0 +1,23 @@
+<reportingRegions>
+	<region>
+		<sequence>0</sequence>
+		<title>USA</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0x0000EE</color>
+	</region>
+	<region>
+		<sequence>1</sequence>
+		<title>UK</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0xEE0000</color>
+	</region>
+	<region>
+		<sequence>2</sequence>
+		<title>Out of Country</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0x009933</color>
+	</region>
+</reportingRegions>

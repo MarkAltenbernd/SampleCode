@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="38" height="70"  
+	xmlns:odo="*" 
+	creationComplete="initComponent()">
+	
+    <!-- Font for numeral images: Arial Narrow; fontsize = 64; image width = 38px; image heigth = 70px -->
+    <!-- Used in Odometers on Dollars Per and Hits Per displays -->
+    <!-- To use, rename to OdometerDigit.mxml and move to view.odometer folder -->
+	<mx:Script>
+		<![CDATA[
+			
+			import flash.utils.Timer;
+			import flash.events.TimerEvent;
+			import copart.WallOfMonitors.view.odometer.*;
+			
+			private var _currentNumeral:uint = 0;
+			private var _duration:uint = 300;		//	18-May-09 to reduce cycle sucking
+			private var oldNumeral:uint = new uint();
+			private var newNumeral:uint = new uint();
+			private var alphaIncrement:Number = new Number();
+			private var fadeTimer:Timer;
+			private var changeDuration:Number = new Number();
+			private var numberOfChanges:uint = new uint();
+			private var timerTicks:uint = new uint();
+			private var ctr:uint;
+			
+			private var _lowerLimit:uint = 0;
+			private var _upperLimit:uint = 9;
+			private var _minAlpha:Number = 0.0;
+			private var _maxAlpha:Number = 1.0;
+			private var numerals:Array;
+			private var _trigger:OdometerDigit;
+			
+			//	setters and getters
+			public function set lowerLimit(value:uint):void {
+				_lowerLimit = value;
+			}
+			public function get lowerLimit():uint {
+				return _lowerLimit;
+			}
+			public function set upperLimit(value:uint):void {
+				_upperLimit = value;
+			}
+			public function get upperLimit():uint {
+				return _upperLimit;
+			}
+			public function set minAlpha(value:Number):void {
+				_minAlpha = value;
+			}
+			public function get minAlpha():Number {
+				return _minAlpha;
+			}
+			public function set maxAlpha(value:Number):void {
+				_maxAlpha = value;
+			}
+			public function get maxAlpha():Number {
+				return _maxAlpha;
+			}
+			public function set numeral(value:uint):void {
+				if (value >= numerals.length) return; 
+				numerals[_currentNumeral].visible = false;
+				var oldNumeral:uint = _currentNumeral;
+				_currentNumeral = value;
+				numerals[_currentNumeral].visible = true;
+			}
+			public function get numeral():uint {
+				return _currentNumeral;
+			}
+			public function set trigger(value:OdometerDigit):void {
+				_trigger = value;
+				trigger.addEventListener(OdometerDigitEvent.LAST_STARTING, triggered);
+			}
+			public function get trigger():OdometerDigit {
+				return _trigger;
+			}
+			public function set duration(value:uint):void {
+				_duration = value;
+			}
+			[Bindable] public function get duration():uint {
+				return _duration;
+			}
+			
+			private function initComponent():void {
+				numerals = new Array(	//	An array of references to numeral images 
+					numeral_0,
+					numeral_1,
+					numeral_2,
+					numeral_3,
+					numeral_4,
+					numeral_5,
+					numeral_6,
+					numeral_7,
+					numeral_8,
+					numeral_9);
+			}
+			public function change(duration:Number=1.0, changes:uint=1, ticksPerSecond:uint=24):void {
+					//	duration is in seconds for a roll from current numeral to the next
+					//	changes is number of numerals to roll
+					changeDuration = duration;
+					numberOfChanges = changes; 
+					timerTicks = duration * ticksPerSecond;
+					alphaIncrement = (_maxAlpha - _minAlpha) / timerTicks;
+					var tickRate:Number = (changeDuration * 1000) / ticksPerSecond;
+					if (timerTicks <= 1) timerTicks = 2;	//	If timerTicks==0, next statement would result in a runaway Timer
+					fadeTimer = new Timer(tickRate, timerTicks - 1);
+					
+					this.addEventListener(OdometerDigitEvent.ROLL_ENDED, crossFade);
+					crossFade(new OdometerDigitEvent(OdometerDigitEvent.ROLL_ENDED));
+			}
+			private function crossFade(evnt:OdometerDigitEvent):void {
+				if (numberOfChanges-- > 0) {
+					if (_currentNumeral == _upperLimit) 
+						sendEvent(OdometerDigitEvent.LAST_STARTING);
+					else
+						sendEvent(OdometerDigitEvent.ROLL_STARTING);
+					oldNumeral = _currentNumeral;
+					newNumeral = oldNumeral + 1;
+					if (newNumeral > _upperLimit) newNumeral = _lowerLimit;
+					fadeTimer.addEventListener(TimerEvent.TIMER, changeAlphas);
+					fadeTimer.addEventListener(TimerEvent.TIMER_COMPLETE, finishChange);
+					ctr = 0;
+					changeAlphas(new TimerEvent(TimerEvent.TIMER));		//	Force immediate initiation
+					fadeTimer.start();
+					if (_currentNumeral == _upperLimit) 
+						sendEvent(OdometerDigitEvent.LAST_ROLLING);
+					else
+						sendEvent(OdometerDigitEvent.ROLLING);
+				}		
+			}
+			private function changeAlphas(evnt:TimerEvent):void {
+				numerals[oldNumeral].alpha -= alphaIncrement;
+				numerals[newNumeral].alpha += alphaIncrement;
+				if ((fadeTimer.repeatCount - fadeTimer.currentCount) <= 1)
+					if (_currentNumeral == _upperLimit) 
+						sendEvent(OdometerDigitEvent.LAST_ENDING);
+					else
+						sendEvent(OdometerDigitEvent.ROLL_ENDING);
+			}
+			private function finishChange(evnt:TimerEvent):void {
+				numerals[oldNumeral].alpha = _minAlpha;
+				numerals[newNumeral].alpha = _maxAlpha;
+				fadeTimer.reset();
+				if (++_currentNumeral > _upperLimit) {
+					_currentNumeral = _lowerLimit;
+					sendEvent(OdometerDigitEvent.ROLL_ENDED);
+					sendEvent(OdometerDigitEvent.LAST_ENDED);
+				}
+				else
+					sendEvent(OdometerDigitEvent.ROLL_ENDED);
+			}
+			private function sendEvent(eventType:String):void {
+				var evnt:OdometerDigitEvent = new OdometerDigitEvent(eventType, changeDuration, timerTicks, _currentNumeral);
+				dispatchEvent(evnt);
+			}
+			private function triggered(evnt:OdometerDigitEvent):void {
+				change(evnt.changeDuration, 1, evnt.timerTicks);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Metadata>
+		[Event(name="rollStarting", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="rolling", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="rollEnding", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="rollEnded", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="lastStarting", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="lastRolling", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="lastEnding", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+		[Event(name="lastEnded", type="copart.WallOfMonitors.view.odometer.OdometerDigitEvent")]
+	</mx:Metadata>
+	
+	<mx:Fade id="hide" duration="{duration}" />
+	<mx:Fade id="show" duration="{duration}" />
+	
+	<mx:Image x="0" y="0" visible="true" id="numeral_0" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_0.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_1" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_1.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_2" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_2.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_3" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_3.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_4" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_4.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_5" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_5.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_6" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_6.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_7" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_7.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_8" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_8.png')" />
+	<mx:Image x="0" y="0" visible="false" id="numeral_9" 
+		source="@Embed(source='copart/WallOfMonitors/view/odometer/images/ArialNarrow64_38x70_9.png')" />
+	
+</mx:Canvas>

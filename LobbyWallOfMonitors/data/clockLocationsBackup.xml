@@ -1,0 +1,44 @@
+<report>
+    <row>
+        <LocationID>California</LocationID>
+        <Location>Cordelia Junction, USA</Location>
+        <ClockBase>12</ClockBase>
+        <TimezoneOffset>0</TimezoneOffset>
+        <DialImage>Flag_USA</DialImage>
+    </row>
+    <row>
+        <LocationID>Colorado</LocationID>
+        <Location>Colorado, USA</Location>
+        <ClockBase>12</ClockBase>
+        <TimezoneOffset>1</TimezoneOffset>
+        <DialImage>Flag_USA</DialImage>
+    </row>
+    <row>
+        <LocationID>New York</LocationID>
+        <Location>New York, USA</Location>
+        <ClockBase>12</ClockBase>
+        <TimezoneOffset>3</TimezoneOffset>
+        <DialImage>Flag_USA</DialImage>
+    </row>
+    <row>
+        <LocationID>London</LocationID>
+        <Location>London, UK</Location>
+        <ClockBase>12</ClockBase>
+        <TimezoneOffset>8</TimezoneOffset>
+        <DialImage>Flag_UK</DialImage>
+    </row>
+    <row>
+        <LocationID>Dubai</LocationID>
+        <Location>Dubai, UAE</Location>
+        <ClockBase>24</ClockBase>
+        <TimezoneOffset>12</TimezoneOffset>
+        <DialImage>Flag_UAE</DialImage>
+    </row>
+    <row>
+        <LocationID>Hong Kong</LocationID>
+        <Location>Hong Kong, China</Location>
+        <ClockBase>12</ClockBase>
+        <TimezoneOffset>16</TimezoneOffset>
+        <DialImage>Flag_China</DialImage>
+    </row>
+</report>

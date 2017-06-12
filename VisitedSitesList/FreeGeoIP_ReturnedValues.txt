@@ -1,0 +1,40 @@
+Rerturned by browser at URL "http://freegeoip.net/json/"
+{"ip":"64.7.69.242"
+,"country_code":"US"
+,"country_name":"United States"
+,"region_code":"CA"
+,"region_name":"California"
+,"city":"Novato"
+,"zip_code":"94947"
+,"time_zone":"America/Los_Angeles"
+,"latitude":38.1032
+,"longitude":-122.6299
+,"metro_code":807}
+
+Returned in code by "$.getJSON('http://freegeoip.net/json/');"
+getJSON.success()
+data=[object Object]
+ip: undefined
+country_code: undefined
+country_name: undefined
+region_code: undefined
+region_name: undefined
+city: undefined
+zip_code: undefined
+time_zone: undefined
+latitude: undefined
+longitude: undefined
+metro_code: undefined
+
+altenbernd.com
+{"ip":"23.101.183.63","country_code":"US","country_name":"United States","region_code":"TX","region_name":"Texas","city":"San Antonio","zip_code":"78288","time_zone":"America/Chicago","latitude":29.4241,"longitude":-98.4936,"metro_code":641}
+
+sfsymphony.com
+{"ip":"205.178.189.131","country_code":"US","country_name":"United States","region_code":"FL","region_name":"Florida","city":"Jacksonville","zip_code":"32258","time_zone":"America/New_York","latitude":30.1438,"longitude":-81.5401,"metro_code":561}
+
+uiuc.edu
+{"ip":"192.17.13.36","country_code":"US","country_name":"United States","region_code":"IL","region_name":"Illinois","city":"Urbana","zip_code":"61801","time_zone":"America/Chicago","latitude":40.1106,"longitude":-88.2073,"metro_code":648}
+
+Northwestern University
+{"ip":"129.105.136.70","country_code":"US","country_name":"United States","region_code":"IL","region_name":"Illinois","city":"Evanston","zip_code":"60208","time_zone":"America/Chicago","latitude":42.0586,"longitude":-87.6845,"metro_code":602}
+

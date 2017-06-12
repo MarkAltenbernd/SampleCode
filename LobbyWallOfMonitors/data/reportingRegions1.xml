@@ -1,0 +1,51 @@
+<reportingRegions>
+	<region>
+		<sequence>0</sequence>
+		<title>Mexico</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0x009933</color>
+	</region>
+	<region>
+		<sequence>1</sequence>
+		<title>Latin America</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0xFF0000</color>
+	</region>
+	<region>
+		<sequence>2</sequence>
+		<title>Middle East</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0x66FFFF</color>
+	</region>
+	<region>
+		<sequence>3</sequence>
+		<title>Canada</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0xCC0033</color>
+	</region>
+	<region>
+		<sequence>4</sequence>
+		<title>Europe</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0x6600FF</color>
+	</region>
+	<region>
+		<sequence>5</sequence>
+		<title>Australasia</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0xCC6600</color>
+	</region>
+	<region>
+		<sequence>6</sequence>
+		<title>Africa</title>
+		<cars>0</cars>
+		<dollars>0</dollars>
+		<color>0xFF00FF</color>
+	</region>
+</reportingRegions>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC 
+    "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" 
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<!--
+  @Name: $RCSfile: web.xml,v $
+  @Version: $Revision: 
+  @Date: $Date: 2009/01/27 18:52:16 $
+  
+  Copyright (C) 2007 Copart, Inc. All rights reserved.
+-->
+<web-app>
+	
+	<display-name>Wall of Monitors</display-name>
+	
+  <welcome-file-list>
+  	<welcome-file>/index.html</welcome-file>
+  </welcome-file-list>
+	
+</web-app>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   creationComplete="init()"
+			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			//	This application assumes use of the standard ASCII character set, and the
+			//	constants below reflect that assumption. The character set could be changed
+			//	by querying a Web service for the values of constants and related keyboard mappings, 
+			//	or those values could be acquired from the operating system.
+			private const CHARACTER_SET_SIZE:int = 26;
+			private const MAX_WORD_LENGTH:int = 25;
+			private const FIRST_CHAR_CODE:Number = 65;
+			private const LAST_CHAR_CODE:Number = 90;
+			private const LC_OFFSET:Number = 32;
+			
+			private var factorials:Array = new Array(MAX_WORD_LENGTH + 1);
+			private var lettersInUse:Array = new Array((LAST_CHAR_CODE - FIRST_CHAR_CODE) + 1);
+			
+			private var uniqueWords:Number = 0;
+			private var uniqueLetters:Number = 0;
+			private var totalWords:Number = 0;
+			private var repeatedWords:Number = 0;
+			private var position:Number = 0;
+			
+			private function init():void {
+				//	This function is invoked in response to the CREATION_COMPLETE event,
+				//	which is dispatched by the Flex framework.
+				//	The following could be done with recursion,  
+				//	but simple iteration is far more efficient.
+				factorials[0] = 1.0;
+				for (var n:Number = 1.0; n <= MAX_WORD_LENGTH; n++) {
+					factorials[n] = factorials[n - 1] * n;
+				}
+			}
+			private function cleanse(word:String):String {
+				//	Force lowercase to uppercase and discard non-letters
+				var localWord:String = word.toUpperCase();
+				var cleanWord:String = "";
+				for (var i:int = 0; i < word.length; i++) {
+					var charCode:Number = localWord.charCodeAt(i);
+					//	Fold lowercase to UPPERCASE - for languages not supporting toUpperCase()
+					//	Question: How do we accommodate character sets with non-contiguous alphabets,
+					//	e.g. IBM's EBCDIC? This algorithm won't work for them.
+					if ((charCode >= FIRST_CHAR_CODE + LC_OFFSET) && (charCode <= LAST_CHAR_CODE + LC_OFFSET)) {
+						charCode -= LC_OFFSET;
+					}
+					//	Keep only alphabetic letters, discard non-letters
+					if ((charCode >= FIRST_CHAR_CODE) && (charCode <= LAST_CHAR_CODE)) {
+						cleanWord = cleanWord.concat(String.fromCharCode(charCode));
+					}
+				}
+				return cleanWord;
+			}
+			private function countLettersInUse(word:String):void {
+				for (var j:int = 0; j < lettersInUse.length; j++) { 
+					//	zero out any previous counts
+					lettersInUse[j] = 0;
+				}
+				for (var i:int = 0; i < word.length; i++) {
+					var charCode:Number = word.charCodeAt(i) - FIRST_CHAR_CODE;
+					// Accumulate number of uses for each letter
+					lettersInUse[charCode]++;	
+				} 
+			}
+			private function countUniqueLetters(word:String):Number { 
+				//	Not used to compute position; used only for info display in UI
+				countLettersInUse(word);
+				uniqueLetters = 0;
+				for (var k:int = 0; k < lettersInUse.length; k++) { 
+				//	If a letter is used more than once, its count is still only 1
+					if (lettersInUse[k] > 0) 
+						uniqueLetters++;
+				}
+				return uniqueLetters;
+			}
+			private function computeUniqueWords(word:String):Number { 
+				//	Distinct Permutations = Total Permutations / Permutations of Repeated Elements
+				totalWords = factorials[word.length]; 
+				repeatedWords = 1;
+				for (var i:int = 0; i < lettersInUse.length; i++) { 
+					if (lettersInUse[i] > 0) {
+						repeatedWords *= factorials[lettersInUse[i]];
+					}
+				}
+				uniqueWords = totalWords / repeatedWords;
+				return uniqueWords;				
+			}
+			private function computePosition(word:String):Number {
+				position = 0;
+				var localWord:String = word;
+				while(localWord.length > 0) {
+					countLettersInUse(localWord);
+					computeUniqueWords(localWord);
+					var precedingLetters:int = 0;
+					var loopLimit:int = localWord.charCodeAt(0) - FIRST_CHAR_CODE;
+					for (var j:int = 0; j < loopLimit; j++) {
+						precedingLetters += lettersInUse[j];
+					}
+					var wordsPerLetter:Number = uniqueWords / localWord.length;
+					var increment:Number = wordsPerLetter * precedingLetters;
+					position += increment;				
+					// Discard the first letter, then loop
+					localWord = localWord.substr(1, localWord.length - 1); 
+				}
+				position++;			//	Convert from zero-based to one-based
+				return position;
+			}
+			//	Invoked whenever the text property of the <TextInput id="wordBox /> changes in the UI
+			private function updateUI():void {
+				wordBox.text = cleanse(wordBox.text);
+				labNumber.text = wordBox.text.length.toString();
+				labUnique.text = countUniqueLetters(wordBox.text).toString();
+				labUniqueWords.text = formatOrdinal.format(computeUniqueWords(wordBox.text).toString());
+				labTotalWords.text = formatOrdinal.format(totalWords.toString());
+				labPosition.text = formatOrdinal.format(computePosition(wordBox.text).toString());
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:NumberFormatter id="formatOrdinal" fractionalDigits="0" decimalSeparator="." groupingSeparator="," useGrouping="true" /> 
+	</fx:Declarations>
+	<s:VGroup left="100" right="10" top="100" bottom="10">
+		<s:Group>
+			<s:layout>
+				<s:VerticalLayout gap="5" />
+			</s:layout>
+			<mx:Text id="title">
+				<mx:htmlText>
+					<![CDATA[<font size="20" color="#3333CC">Enter a 'word', up to 25 letters in length:]]>
+				</mx:htmlText>
+			</mx:Text>
+			<s:Form>
+				<s:FormItem label="The Word: ">
+					<s:TextInput id="wordBox" width="250" change="updateUI()" />
+				</s:FormItem>
+				<s:FormItem label="Number of Letters: ">
+					<s:Label id="labNumber" text="0" />
+				</s:FormItem>
+				<s:FormItem label="Unique Letters: ">
+					<s:Label id="labUnique" text="0" />
+				</s:FormItem>
+				<s:FormItem label="Total Words: ">
+					<s:Label id="labTotalWords" text="0" />
+				</s:FormItem>
+				<s:FormItem label="Unique Words: ">
+					<s:Label id="labUniqueWords" text="0" />
+				</s:FormItem>
+				<s:FormItem label="Alpha-Sort position: " >
+					<s:Label id="labPosition" text="Unknown" />
+				</s:FormItem>
+			</s:Form>
+		</s:Group>
+	</s:VGroup>
+	</s:Application>
